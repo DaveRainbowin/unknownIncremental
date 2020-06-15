@@ -1,4 +1,5 @@
 var gameData = {
+  prevPlay: false,
   saveAs: function(data, loc) {
     localStorage.setItem(loc, JSON.stringify(data));
   },
@@ -15,7 +16,6 @@ var gameData = {
     gameData.saveAs(gameData.prevPlay, 'prevPlay');
   },
   load: function() {
-    gameData.loadAs('gameData.prevPlay', 'prevPlay');
     if (gameData.prevPlay) {
       gameData.loadAs('mainNum', 'mainNum');
       gameData.loadAs('upgLvl', 'upgLvl');
@@ -23,8 +23,7 @@ var gameData = {
       gameData.loadAs('nps', 'nps');
       gameData.loadAs('npsUpg', 'npsUpg');
     }
-  },
-  prevPlay: false
+  }
 }
 var mainNum = 10;
 var upgLvl = 0;
@@ -33,7 +32,9 @@ var npsUpg = 1;
 var nps = 0;
 setInterval(update, 100);
 setInterval(updateSec, 1000);
-setInterval(gameData.save, 15000);
+function get(id) {
+  return document.getElementById(id);
+}
 function update() {
   get("mainNum").innerHTML = `${mainNum}`;
   get("price").innerHTML = `Price: ${upgPrice}`
@@ -43,6 +44,7 @@ function updateSec() {
 }
 function upgrade() {
   if (upgPrice <= mainNum) {
+    let temp = mainNum;
     mainNum -= upgPrice;
     upgLvl++;
     upgPrice = Math.floor(upgPrice ** 1.1);
@@ -51,7 +53,9 @@ function upgrade() {
     upgrade();
   }
 }
-function get(id) {
-  return document.getElementById(id);
+/* function init() {
+  gameData.loadAs('gameData.prevPlay', 'prevPlay');
+  gameData.prevPlay = true;
+  window['autoSave'] = setInterval(gameData.save, 15000);
 }
-gameData.load();
+init(); */
