@@ -1,3 +1,31 @@
+var gameData = {
+  saveAs: function(data, loc) {
+    localStorage.setItem(loc, JSON.stringify(data));
+  },
+  loadAs: function(data, loc) {
+    window[data] = JSON.parse(localStorage.getItem(loc));
+  },
+  save: function() {
+    console.log("15 second auto-save");
+    gameData.saveAs(mainNum, 'mainNum');
+    gameData.saveAs(upgLvl, 'upgLvl');
+    gameData.saveAs(upgPrice, 'upgPrice');
+    gameData.saveAs(nps, 'nps');
+    gameData.saveAs(npsUpg, 'npsUpg');
+    gameData.saveAs(gameData.prevPlay, 'prevPlay');
+  },
+  load: function() {
+    gameData.loadAs('gameData.prevPlay', 'prevPlay');
+    if (gameData.prevPlay) {
+      gameData.loadAs('mainNum', 'mainNum');
+      gameData.loadAs('upgLvl', 'upgLvl');
+      gameData.loadAs('upgPrice', 'upgPrice');
+      gameData.loadAs('nps', 'nps');
+      gameData.loadAs('npsUpg', 'npsUpg');
+    }
+  },
+  prevPlay: false
+}
 var mainNum = 10;
 var upgLvl = 0;
 var upgPrice = 10;
@@ -8,6 +36,7 @@ setInterval(updateSec, 1000);
 setInterval(gameData.save, 15000);
 function update() {
   get("mainNum").innerHTML = `${mainNum}`;
+  get("price").innerHTML = `Price: ${upgPrice}`
 }
 function updateSec() {
   mainNum += nps;
@@ -21,33 +50,6 @@ function upgrade() {
     nps += Math.round(npsUpg);
     upgrade();
   }
-}
-var gameData = {
-  saveAs: function(data, loc) {
-    localStorage.setItem(loc, JSON.stringify(data));
-  },
-  loadAs: function(data, loc) {
-    window[data] = JSON.parse(localStorage.getItem(loc));
-  },
-  save: function() {
-    this.saveAs(mainNum, 'mainNum');
-    this.saveAs(upgLvl, 'upgLvl');
-    this.saveAs(upgPrice, 'upgPrice');
-    this.saveAs(nps, 'nps');
-    this.saveAs(npsUpg, 'npsUpg');
-    this.saveAs(gameData.prevPlay, 'prevPlay');
-  },
-  load: function() {
-    if (this.prevPlay) {
-      this.loadAs('mainNum', 'mainNum');
-      this.loadAs('upgLvl', 'upgLvl');
-      this.loadAs('upgPrice', 'upgPrice');
-      this.loadAs('nps', 'nps');
-      this.loadAs('npsUpg', 'npsUpg');
-      this.loadAs('gameData.prevPlay', 'prevPlay');
-    }
-  },
-  prevPlay: false
 }
 function get(id) {
   return document.getElementById(id);
