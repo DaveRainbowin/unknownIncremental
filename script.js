@@ -1,4 +1,4 @@
-var listofstuff = ['mainNum', 'upgLvl', 'upgPrice', 'upg2Lvl', 'upg2Price','upg3Lvl', 'upg3Price', 'unlockedPerks', 'nps', 'npsUpg', 'visitedBefore', 'tickSpeed'];
+var listofstuff = ['mainNum', 'upgLvl', 'upgPrice', 'upg2Lvl', 'upg2Price','upg3Lvl', 'upg3Price', 'unlockedPerks', 'nps', 'npsUpg', 'visitedBefore', 'tickSpeed', 'pp'];
 function save() {
   listofstuff.forEach(x => localStorage.setItem(x, JSON.stringify(window[x])));
 }
@@ -41,6 +41,8 @@ function update() {
   get("tickSpeed").innerHTML = `${tickSpeed}ms tickspeed`;
   get("nps").innerHTML = `${nps} nps`;
   get("prestigeButton").innerHTML = `Prestige for ${ppGain} PP`;
+  get("pp").innerHTML = `${pp} PP`;
+  get("ppBoost").innerHTML = `Boosting by ^${Math.round((pp ** 0.25) * 100) / 100}`;
 }
 function updateSec() {
   mainNum += nps;
@@ -95,7 +97,7 @@ function prestige() {
   clearInterval(tickKeeper);
   tickKeeper = setInterval(updateSec, tickSpeed);
   pp += ppGain;
-  npsUpg *= (pp ** 0.1);
+  npsUpg *= (pp ** 0.25);
 }
 function calcPrestige() {
   if (mainNum >= 10000) {
@@ -133,6 +135,8 @@ function init() {
   }
   if (unlockedPerks) {
     get("perkMenuB").style.display = "flex";
+    get("pp").style.display = "flex";
+    get("ppBoost").style.display = "flex";
   }
   clearInterval(tickKeeper);
   tickKeeper = setInterval(updateSec, tickSpeed);
@@ -141,7 +145,7 @@ function activateAutosave() {
   setInterval(save, 5000);
 }
 function wipeSave() {
-  let listofdefault = [10, 0, 10, 0, 1000, 0, 2500, false, 0, 1.25, false, 1000];
+  let listofdefault = [10, 0, 10, 0, 1000, 0, 2500, false, 0, 1.25, false, 1000, 0];
   for (i = 0; i <= listofdefault.length; i++) {
     window[listofstuff[i]] = listofdefault[i];
   }
