@@ -7,6 +7,28 @@
   </head>
   <body>
     <h2 id="mainNum">10</h2>
-    <button onclick="upgrade()">Upgrade 1<br /><p id="price">Price: 10</p></button>
+    <h3 id="nps">0 nps</h3>
+    <h3 id="tickSpeed">1000ms tickspeed</h3>
+    <hr />
+    <div id="menus">
+      <button class="menuBtn" onclick="openTab('startingMenu')">Upgrades</button>
+      <button class="menuBtn" onclick="openTab('perkMenu')" id="perkMenuB">Perks</button>
+    </div>
+    <div id="startingMenu" class="menu">
+      <div id="squareButtonWrap">
+        <button onclick="upgrade()">Upgrade 1<br /><p id="upgInfo">Increases nps by 1</p><p id="price">Price: 10</p></button>
+        <button onclick="upgrade2()">Upgrade 2<br /><p id="upg2Info">Increase nps gain by * 1.5</p><p id="price2">Price: 1000</p></button>
+        <button onclick="upgrade3()">Upgrade 3<br /><p id="upg3Info">Speeds up tickspeed by 50ms</p><p id="price3">Price: 2500</p></button>
+        <button onclick="unlockPerks()">Unlock Perks<br />10000</button>
+      </div>
+    </div>
+    <div id="perkMenu" class="menu">
+      <button onclick="prestige()" id="prestigeButton" class="menuB">Prestige for 0 PP</button>
+    </div>
+    <button onclick="optionsMenu(0)" class="menuB" id="optionsB">Options</button>
+    <div id="options">
+      <button onclick="wipeSave()" class="menuB">Wipe Save</button>
+      <button onclick="optionsMenu(1)" class="menuB">Close menu</button>
+    </div>
   </body>
 </html>

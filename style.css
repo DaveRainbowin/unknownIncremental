@@ -1,3 +1,35 @@
 body {
   font-family: sans-serif;
 }
+div {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 260px
+}
+button {
+  width: 130px;
+  height: 130px;
+}
+.menuBtn {
+  width: initial;
+  height: initial;
+}
+.menuB {
+  width: initial;
+  height: initial;
+}
+#perkMenu {
+  display: none;
+}
+#perkMenuB {
+  display: none;
+}
+#options {
+  display: none;
+  text-align: center;
+  background-color: #aaaa;
+}
+#optionsB {
+  bottom: 0;
+  left: 0;
+}
