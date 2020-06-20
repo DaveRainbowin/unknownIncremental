@@ -42,7 +42,7 @@ function update() {
   get("nps").innerHTML = `${nps} nps`;
   get("prestigeButton").innerHTML = `Prestige for ${ppGain} PP`;
   get("pp").innerHTML = `${pp} PP`;
-  get("ppBoost").innerHTML = `Boosting by ^${Math.round((pp ** 0.25) * 100) / 100}`;
+  get("ppBoost").innerHTML = `Boosting by ^${Math.round((pp ** 0.1) * 100) / 100}`;
 }
 function updateSec() {
   mainNum += nps;
@@ -96,8 +96,10 @@ function prestige() {
   }
   clearInterval(tickKeeper);
   tickKeeper = setInterval(updateSec, tickSpeed);
-  pp += ppGain;
-  npsUpg *= (pp ** 0.25);
+  get("pp").style.display = "flex";
+  get("ppBoost").style.display = "flex";
+  pp += Math.floor(ppGain * 10) / 10;
+  npsUpg *= (pp ** 0.1);
 }
 function calcPrestige() {
   if (mainNum >= 10000) {
