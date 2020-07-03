@@ -1,4 +1,4 @@
-var listofstuff = ['mainNum', 'upgLvl', 'upgPrice', 'upg2Lvl', 'upg2Price','upg3Lvl', 'upg3Price', 'unlockedPerks', 'nps', 'npsUpg', 'visitedBefore', 'tickSpeed', 'pp'];
+var listofstuff = ['mainNum', 'upgLvl', 'upgPrice', 'upg2Lvl', 'upg2Price','upg3Lvl', 'upg3Price', 'unlockedPerks', 'nps', 'npsUpg', 'visitedBefore', 'tickSpeed', 'c', 'time', 'speedTokens'];
 function save() {
   listofstuff.forEach(x => localStorage.setItem(x, JSON.stringify(window[x])));
 }
@@ -22,10 +22,13 @@ var upg2Lvl = 0;
 var upg2Price = 1000;
 var upg3Lvl = 0;
 var upg3Price = 2500;
-var ppGain = 0;
-var pp = 0;
+var cGain = 0;
+var c = 0;
 var unlockedPerks = false;
 var visitedBefore = false;
+var speedTokens = 0;
+var speedOn = false;
+var time = Math.round((new Date()).getTime() / 1000);
 setInterval(update, 100);
 var tickKeeper = setInterval(updateSec, 1000);
 function get(id) {
@@ -33,16 +36,16 @@ function get(id) {
 }
 function update() {
   calcPrestige();
-  get("mainNum").innerHTML = `${mainNum}`;
-  get("price").innerHTML = `Price: ${upgPrice}`;
-  get("price2").innerHTML = `Price: ${upg2Price}`;
-  get("price3").innerHTML = `Price: ${upg3Price}`;
+  get("mainNum").innerHTML = `${mainNum} n`;
+  get("price").innerHTML = `Price: ${upgPrice} n`;
+  get("price2").innerHTML = `Price: ${upg2Price} n`;
+  get("price3").innerHTML = `Price: ${upg3Price} n`;
   get("upgInfo").innerHTML = `Increases nps by ${Math.round(npsUpg)}`;
   get("tickSpeed").innerHTML = `${tickSpeed}ms tickspeed`;
   get("nps").innerHTML = `${nps} nps`;
-  get("prestigeButton").innerHTML = `Prestige for ${ppGain} PP`;
-  get("pp").innerHTML = `${pp} PP`;
-  get("ppBoost").innerHTML = `Boosting by ^${Math.round((pp ** 0.1) * 100) / 100}`;
+  get("prestigeButton").innerHTML = `Prestige for ${cGain} Crystals`;
+  get("pp").innerHTML = `${c} C`;
+  get("ppBoost").innerHTML = `Boosting production by ^${Math.round((c ** 0.1) * 100) / 100}`;
 }
 function updateSec() {
   mainNum += nps;
@@ -86,6 +89,7 @@ function unlockPerks() {
     unlockedPerks = true;
     update();
     get("perkMenuB").style.display = "block";
+    get("unlockPerks").style.display = "none";
   }
 }
 function prestige() {
@@ -98,14 +102,41 @@ function prestige() {
   tickKeeper = setInterval(updateSec, tickSpeed);
   get("pp").style.display = "flex";
   get("ppBoost").style.display = "flex";
-  pp += Math.floor(ppGain * 10) / 10;
-  npsUpg *= (pp ** 0.1);
+  c += Math.floor(cGain * 10) / 10;
+  npsUpg *= (c ** 0.1);
 }
 function calcPrestige() {
   if (mainNum >= 10000) {
-    ppGain = Math.floor((mainNum ** 0.1) * 10) / 10;
+    cGain = Math.floor((mainNum ** 0.1) * 10) / 10;
   } else {
-    ppGain = 0;
+    cGain = 0;
+  }
+}
+function pUpg() {
+  // check for >= 5 crystals
+  // check for already bought
+  // automatically run upgrade()
+}
+function speed(pressed) {
+  if (pressed) {
+    if (!speedOn) {
+      speedOn = true;
+      setTimeout(speed, 1000, false);
+      clearInterval(tickKeeper);
+      tickKeeper = setInterval(updateSec, 50);
+    } else if (speedOn) {
+      speedOn = false;
+    }
+  } else if (!pressed) {
+    if (speedTokens >= 1) {
+      speedTokens--;
+      setTimeout(speed, 1000, false);
+      get("st").innerHTML = `${speedTokens} speed tokens <button onclick="speed(true)" id="speedButton">Activate</button>`;
+    } else if (speedTokens == 0) {
+      speedOn = false;
+      clearInterval(tickKeeper);
+      tickKeeper = setInterval(updateSec, tickSpeed);
+    }
   }
 }
 function optionsMenu(dir) {
@@ -139,15 +170,20 @@ function init() {
     get("perkMenuB").style.display = "flex";
     get("pp").style.display = "flex";
     get("ppBoost").style.display = "flex";
+    get("unlockPerks").style.display = "none";
   }
   clearInterval(tickKeeper);
   tickKeeper = setInterval(updateSec, tickSpeed);
+  let timeTemp = Math.round((new Date()).getTime() / 1000);
+  mainNum += Math.round(((timeTemp - time) / (tickSpeed / 1000)) * nps);
+  speedTokens += Math.round((timeTemp - time) * (1 / 60));
+  get("st").innerHTML = `${speedTokens} speed tokens <button onclick="speed(true)" id="speedButton">Activate</button>`;
 }
 function activateAutosave() {
   setInterval(save, 5000);
 }
 function wipeSave() {
-  let listofdefault = [10, 0, 10, 0, 1000, 0, 2500, false, 0, 1.25, false, 1000, 0];
+  let listofdefault = [10, 0, 10, 0, 1000, 0, 2500, false, 0, 1.25, false, 1000, 0, 0, 0];
   for (i = 0; i <= listofdefault.length; i++) {
     window[listofstuff[i]] = listofdefault[i];
   }

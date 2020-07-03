@@ -18,6 +18,10 @@ button {
   width: initial;
   height: initial;
 }
+#speedButton {
+  width: initial;
+  height: initial;
+}
 #perkMenu {
   display: none;
 }
