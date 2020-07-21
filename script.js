@@ -22,6 +22,7 @@ var upg2Lvl = 0;
 var upg2Price = 1000;
 var upg3Lvl = 0;
 var upg3Price = 2500;
+var pUpg1 = false;
 var cGain = 0;
 var c = 0;
 var unlockedPerks = false;
@@ -46,6 +47,7 @@ function update() {
   get("prestigeButton").innerHTML = `Prestige for ${cGain} Crystals`;
   get("pp").innerHTML = `${c} C`;
   get("ppBoost").innerHTML = `Boosting production by ^${Math.round((c ** 0.1) * 100) / 100}`;
+  get("st").innerHTML = `${speedTokens} speed tokens <button onclick="speed(true)" id="speedButton">Activate</button>`;
 }
 function updateSec() {
   mainNum += nps;
@@ -113,9 +115,20 @@ function calcPrestige() {
   }
 }
 function pUpg() {
-  // check for >= 5 crystals
-  // check for already bought
-  // automatically run upgrade()
+  if (c >= 5 && !pUpg1) {
+    setInterval(maxAll, 5000);
+  }
+}
+function maxAll() {
+  while (mainNum >= upg3Price) {
+    upgrade3();
+  }
+  while (mainNum >= upg2Price) {
+    upgrade2();
+  }
+  while (mainNum >= upgPrice) {
+    upgrade();
+  }
 }
 function speed(pressed) {
   if (pressed) {
@@ -131,7 +144,6 @@ function speed(pressed) {
     if (speedTokens >= 1) {
       speedTokens--;
       setTimeout(speed, 1000, false);
-      get("st").innerHTML = `${speedTokens} speed tokens <button onclick="speed(true)" id="speedButton">Activate</button>`;
     } else if (speedTokens == 0) {
       speedOn = false;
       clearInterval(tickKeeper);
@@ -159,33 +171,35 @@ function openTab(pageName) {
   }
   get(pageName).style.display = "flex";
 }
-function init() {
-  setTimeout(activateAutosave, 5000);
-  load();
-  if (!visitedBefore) {
-    visitedBefore = true;
-    save();
+var saveload = {
+  init: function() {
+    setTimeout(activateAutosave, 5000);
+    load();
+    if (!visitedBefore) {
+      visitedBefore = true;
+      save();
+    }
+    if (unlockedPerks) {
+      get("perkMenuB").style.display = "flex";
+      get("pp").style.display = "flex";
+      get("ppBoost").style.display = "flex";
+      get("unlockPerks").style.display = "none";
+    }
+    clearInterval(tickKeeper);
+    tickKeeper = setInterval(updateSec, tickSpeed);
+    let timeTemp = Math.round((new Date()).getTime() / 1000);
+    mainNum += Math.round(((timeTemp - time) / (tickSpeed / 1000)) * nps);
+    speedTokens += Math.round((timeTemp - time) * (1 / 60));
+    get("st").innerHTML = `${speedTokens} speed tokens <button onclick="speed(true)" id="speedButton">Activate</button>`;
+  },
+  activateAutosave: function() {
+    setInterval(save, 5000);
+  },
+  wipeSave: function() {
+    let listofdefault = [10, 0, 10, 0, 1000, 0, 2500, false, 0, 1.25, false, 1000, 0, 0, 0];
+    for (i = 0; i <= listofdefault.length; i++) {
+      window[listofstuff[i]] = listofdefault[i];
+    }
   }
-  if (unlockedPerks) {
-    get("perkMenuB").style.display = "flex";
-    get("pp").style.display = "flex";
-    get("ppBoost").style.display = "flex";
-    get("unlockPerks").style.display = "none";
-  }
-  clearInterval(tickKeeper);
-  tickKeeper = setInterval(updateSec, tickSpeed);
-  let timeTemp = Math.round((new Date()).getTime() / 1000);
-  mainNum += Math.round(((timeTemp - time) / (tickSpeed / 1000)) * nps);
-  speedTokens += Math.round((timeTemp - time) * (1 / 60));
-  get("st").innerHTML = `${speedTokens} speed tokens <button onclick="speed(true)" id="speedButton">Activate</button>`;
-}
-function activateAutosave() {
-  setInterval(save, 5000);
-}
-function wipeSave() {
-  let listofdefault = [10, 0, 10, 0, 1000, 0, 2500, false, 0, 1.25, false, 1000, 0, 0, 0];
-  for (i = 0; i <= listofdefault.length; i++) {
-    window[listofstuff[i]] = listofdefault[i];
-  }
-}
-setTimeout(init, 1000);
+};
+setTimeout(saveload.init, 1000);

@@ -18,6 +18,7 @@
       <button class="menuBtn" onclick="openTab('perkMenu')" id="perkMenuB">Perks</button>
     </div>
     <div id="startingMenu" class="menu">
+      <button onclick="maxAll()">Max All</button>
       <button onclick="upgrade()">Upgrade 1<br /><p id="upgInfo">Increases nps by 1</p><p id="price">Price: 10 n</p></button>
       <button onclick="upgrade2()">Upgrade 2<br /><p id="upg2Info">Increase nps gain by * 1.5</p><p id="price2">Price: 1000 n</p></button>
       <button onclick="upgrade3()">Upgrade 3<br /><p id="upg3Info">Speeds up tickspeed by 50ms</p><p id="price3">Price: 2500 n</p></button>
@@ -34,7 +35,7 @@
     </div>
     <button onclick="optionsMenu(0)" class="menuB" id="optionsB">Options</button>
     <div id="options">
-      <button onclick="wipeSave()" class="menuB">Wipe Save</button>
+      <button onclick="saveload.wipeSave()" class="menuB">Wipe Save</button>
       <button onclick="optionsMenu(1)" class="menuB">Close menu</button>
       <p>Join the discord: <a href="https://discord.gg/Wcg5NsQ">https://discord.gg/Wcg5NsQ</a></p>
     </div>
