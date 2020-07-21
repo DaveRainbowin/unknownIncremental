@@ -11,14 +11,14 @@
     <p id="tickSpeed">1000ms tickspeed</p>
     <p id="pp">0 C</p>
     <p id="ppBoost">Boosting production by ^0</p>
-    <p id="st">0 speed tokens <button onclick="speed(true)" id="speedButton">Activate</button></p>
+    <p id="st">0 speed tokens <button onclick="speed(true)" id="speedButton">Activate</button></p> <br />
+    <button onclick="maxAll()" class="menuB">Max All</button>
     <hr />
     <div id="menus">
       <button class="menuBtn" onclick="openTab('startingMenu')">Upgrades</button>
       <button class="menuBtn" onclick="openTab('perkMenu')" id="perkMenuB">Perks</button>
     </div>
     <div id="startingMenu" class="menu">
-      <button onclick="maxAll()">Max All</button>
       <button onclick="upgrade()">Upgrade 1<br /><p id="upgInfo">Increases nps by 1</p><p id="price">Price: 10 n</p></button>
       <button onclick="upgrade2()">Upgrade 2<br /><p id="upg2Info">Increase nps gain by * 1.5</p><p id="price2">Price: 1000 n</p></button>
       <button onclick="upgrade3()">Upgrade 3<br /><p id="upg3Info">Speeds up tickspeed by 50ms</p><p id="price3">Price: 2500 n</p></button>
