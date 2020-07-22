@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.2] - 2020-07-21
+### Fixed
+- Saving/loading the game
+
+### Removed
+- The ability to stop using your speed tokens
+
 ## [0.1.1] - 2020-07-21
 ### Fixed
 - Max all button position and size

@@ -1,16 +1,4 @@
 var listofstuff = ['mainNum', 'upgLvl', 'upgPrice', 'upg2Lvl', 'upg2Price','upg3Lvl', 'upg3Price', 'unlockedPerks', 'nps', 'npsUpg', 'visitedBefore', 'tickSpeed', 'c', 'time', 'speedTokens'];
-function save() {
-  listofstuff.forEach(x => localStorage.setItem(x, JSON.stringify(window[x])));
-}
-function load() {
-  visitedBefore = JSON.parse(localStorage.getItem('visitedBefore'));
-  if (visitedBefore == null || visitedBefore == undefined) {
-    visitedBefore = false;
-  }
-  if (visitedBefore) {
-    listofstuff.forEach(x => window[x] = JSON.parse(localStorage.getItem(x)));
-  }
-}
 var mainNum = 10;
 var upgLvl = 0;
 var upgPrice = 10;
@@ -47,9 +35,9 @@ function update() {
   get("prestigeButton").innerHTML = `Prestige for ${cGain} Crystals`;
   get("pp").innerHTML = `${c} C`;
   get("ppBoost").innerHTML = `Boosting production by ^${Math.round((c ** 0.1) * 100) / 100}`;
-  get("st").innerHTML = `${speedTokens} speed tokens <button onclick="speed(true)" id="speedButton">Activate</button>`;
 }
 function updateSec() {
+  get("st").innerHTML = `${speedTokens} speed tokens <button onclick="speed(true)" id="speedButton">Activate</button>`;
   mainNum += nps;
 }
 function upgrade() {
@@ -132,14 +120,10 @@ function maxAll() {
 }
 function speed(pressed) {
   if (pressed) {
-    if (!speedOn) {
-      speedOn = true;
-      setTimeout(speed, 1000, false);
-      clearInterval(tickKeeper);
-      tickKeeper = setInterval(updateSec, 50);
-    } else if (speedOn) {
-      speedOn = false;
-    }
+    speedOn = true;
+    setTimeout(speed, 1000, false);
+    clearInterval(tickKeeper);
+    tickKeeper = setInterval(updateSec, 50);
   } else if (!pressed) {
     if (speedTokens >= 1) {
       speedTokens--;
@@ -172,12 +156,24 @@ function openTab(pageName) {
   get(pageName).style.display = "flex";
 }
 var saveload = {
+  save: function() {
+    listofstuff.forEach(x => localStorage.setItem(x, JSON.stringify(window[x])));
+  },
+  load: function() {
+    visitedBefore = JSON.parse(localStorage.getItem('visitedBefore'));
+    if (visitedBefore == null || visitedBefore == undefined) {
+      visitedBefore = false;
+    }
+    if (visitedBefore) {
+      listofstuff.forEach(x => window[x] = JSON.parse(localStorage.getItem(x)));
+    }
+  },
   init: function() {
-    setTimeout(activateAutosave, 5000);
-    load();
+    setTimeout(saveload.activateAutosave, 5000);
+    saveload.load();
     if (!visitedBefore) {
       visitedBefore = true;
-      save();
+      saveload.save();
     }
     if (unlockedPerks) {
       get("perkMenuB").style.display = "flex";
@@ -193,7 +189,7 @@ var saveload = {
     get("st").innerHTML = `${speedTokens} speed tokens <button onclick="speed(true)" id="speedButton">Activate</button>`;
   },
   activateAutosave: function() {
-    setInterval(save, 5000);
+    setInterval(saveload.save, 5000);
   },
   wipeSave: function() {
     let listofdefault = [10, 0, 10, 0, 1000, 0, 2500, false, 0, 1.25, false, 1000, 0, 0, 0];
