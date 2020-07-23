@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.3] - 2020-07-22
+### Added
+- A guide in [the readme.md](README.md)
+- Hotkeys (M to max all)
+
+### Deprecated
+- The speed tokens
+
 ## [0.1.2] - 2020-07-21
 ### Fixed
 - Saving/loading the game

@@ -1,4 +1,4 @@
-var listofstuff = ['mainNum', 'upgLvl', 'upgPrice', 'upg2Lvl', 'upg2Price','upg3Lvl', 'upg3Price', 'unlockedPerks', 'nps', 'npsUpg', 'visitedBefore', 'tickSpeed', 'c', 'time', 'speedTokens'];
+var listofstuff = ['mainNum', 'upgLvl', 'upgPrice', 'upg2Lvl', 'upg2Price','upg3Lvl', 'upg3Price', 'unlockedPerks', 'nps', 'npsUpg', 'visitedBefore', 'tickSpeed', 'c', 'time' /*, 'speedTokens' */];
 var mainNum = 10;
 var upgLvl = 0;
 var upgPrice = 10;
@@ -15,7 +15,7 @@ var cGain = 0;
 var c = 0;
 var unlockedPerks = false;
 var visitedBefore = false;
-var speedTokens = 0;
+// var speedTokens = 0;
 var speedOn = false;
 var time = Math.round((new Date()).getTime() / 1000);
 setInterval(update, 100);
@@ -37,7 +37,7 @@ function update() {
   get("ppBoost").innerHTML = `Boosting production by ^${Math.round((c ** 0.1) * 100) / 100}`;
 }
 function updateSec() {
-  get("st").innerHTML = `${speedTokens} speed tokens <button onclick="speed(true)" id="speedButton">Activate</button>`;
+  // get("st").innerHTML = `${speedTokens} speed tokens <button onclick="speed(true)" id="speedButton">Activate</button>`;
   mainNum += nps;
 }
 function upgrade() {
@@ -83,7 +83,7 @@ function unlockPerks() {
   }
 }
 function prestige() {
-  let listofreset = ['mainNum', 'nps', 'upgLvl', 'upgPrice', 'upg2Lvl', 'upg2Price', 'upg3Lvl', 'upg3Price', 'npsUpg', 'tickSpeed'];
+  let listofreset = ['mainNum', 'nps', 'upgLvl', 'upgPrice', 'upg2Lvl', 'upg2Price', 'upg3Lvl', 'upg3Price', 'npsUpg', 'tickSpeed' /*, 'speedTokens' */];
   let listofresetTo = [10, 0, 0, 10, 0, 1000, 0, 2500, 1.25, 1000];
   for (i = 0; i <= listofreset.length; i++) {
     window[listofreset[i]] = listofresetTo[i];
@@ -118,7 +118,7 @@ function maxAll() {
     upgrade();
   }
 }
-function speed(pressed) {
+/* function speed(pressed) {
   if (pressed) {
     speedOn = true;
     setTimeout(speed, 1000, false);
@@ -133,6 +133,16 @@ function speed(pressed) {
       clearInterval(tickKeeper);
       tickKeeper = setInterval(updateSec, tickSpeed);
     }
+  }
+} */
+window.addEventListener("keydown", hotkeys, false);
+function hotkeys(key) {
+  switch (key) {
+    case 77:
+      maxAll();
+      break;
+    default:
+      break;
   }
 }
 function optionsMenu(dir) {
