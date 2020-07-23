@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.4] - 2020-07-22
+### Fixed
+- Speed tokens still loading
+- Hotkeys not working
+
 ## [0.1.3] - 2020-07-22
 ### Added
 - A guide in [the readme.md](README.md)

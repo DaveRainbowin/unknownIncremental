@@ -136,12 +136,15 @@ function maxAll() {
   }
 } */
 window.addEventListener("keydown", hotkeys, false);
-function hotkeys(key) {
-  switch (key) {
+function hotkeys(event) {
+  let pressed = event.keyCode;
+  switch (pressed) {
     case 77:
+      console.log("Yes M");
       maxAll();
       break;
     default:
+      console.log("Not M");
       break;
   }
 }
@@ -195,8 +198,8 @@ var saveload = {
     tickKeeper = setInterval(updateSec, tickSpeed);
     let timeTemp = Math.round((new Date()).getTime() / 1000);
     mainNum += Math.round(((timeTemp - time) / (tickSpeed / 1000)) * nps);
-    speedTokens += Math.round((timeTemp - time) * (1 / 60));
-    get("st").innerHTML = `${speedTokens} speed tokens <button onclick="speed(true)" id="speedButton">Activate</button>`;
+    // speedTokens += Math.round((timeTemp - time) * (1 / 60));
+    // get("st").innerHTML = `${speedTokens} speed tokens <button onclick="speed(true)" id="speedButton">Activate</button>`;
   },
   activateAutosave: function() {
     setInterval(saveload.save, 5000);
