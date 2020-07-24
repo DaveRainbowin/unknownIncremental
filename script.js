@@ -209,6 +209,7 @@ var saveload = {
     for (i = 0; i <= listofdefault.length; i++) {
       window[listofstuff[i]] = listofdefault[i];
     }
+    tickKeeper = setInterval(updateSec, 1000);
   }
 };
 setTimeout(saveload.init, 1000);
