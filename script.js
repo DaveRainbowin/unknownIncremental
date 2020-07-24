@@ -14,6 +14,7 @@ var pUpg1 = false;
 var cGain = 0;
 var c = 0;
 var unlockedPerks = false;
+var unlockedInf = false;
 var visitedBefore = false;
 // var speedTokens = 0;
 var speedOn = false;
@@ -34,7 +35,10 @@ function update() {
   get("nps").innerHTML = `${nps} nps`;
   get("prestigeButton").innerHTML = `Prestige for ${cGain} Crystals`;
   get("pp").innerHTML = `${c} C`;
-  get("ppBoost").innerHTML = `Boosting production by ^${Math.round((c ** 0.1) * 100) / 100}`;
+  get("ppBoost").innerHTML = `Boosting production by ^${Math.round((c ** 0.1)).toFixed(3)}`;
+  if (mainNum >= Infinity) {
+    infinityUnlock();
+  }
 }
 function updateSec() {
   // get("st").innerHTML = `${speedTokens} speed tokens <button onclick="speed(true)" id="speedButton">Activate</button>`;
@@ -92,7 +96,7 @@ function prestige() {
   tickKeeper = setInterval(updateSec, tickSpeed);
   get("pp").style.display = "flex";
   get("ppBoost").style.display = "flex";
-  c += Math.floor(cGain * 10) / 10;
+  c += cGain.toFixed(1);
   npsUpg *= (c ** 0.1);
 }
 function calcPrestige() {
@@ -105,7 +109,11 @@ function calcPrestige() {
 function pUpg() {
   if (c >= 5 && !pUpg1) {
     setInterval(maxAll, 5000);
+    c -= 5;
   }
+}
+function unlockInfinity() {
+
 }
 function maxAll() {
   while (mainNum >= upg3Price) {
@@ -135,16 +143,13 @@ function maxAll() {
     }
   }
 } */
+
 window.addEventListener("keydown", hotkeys, false);
 function hotkeys(event) {
   let pressed = event.keyCode;
   switch (pressed) {
     case 77:
-      console.log("Yes M");
       maxAll();
-      break;
-    default:
-      console.log("Not M");
       break;
   }
 }
