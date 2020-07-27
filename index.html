@@ -17,6 +17,7 @@
     <div id="menus">
       <button class="menuBtn" onclick="openTab('startingMenu')">Upgrades</button>
       <button class="menuBtn" onclick="openTab('perkMenu')" id="perkMenuB">Perks</button>
+      <button class="menuBtn" onclick="openTab('infMenu')" id="infMenuB">Infinity</button>
     </div>
     <div id="startingMenu" class="menu">
       <button onclick="upgrade()">Upgrade 1<br /><p id="upgInfo">Increases nps by 1</p><p id="price">Price: 10 n</p></button>
@@ -32,6 +33,9 @@
         <button>TBA</button>
         <button>TBA</button>
       </div>
+    </div>
+    <div id="infMenu">
+      <button onclick="infinity()" id="infinityButton" class="menuB">Infinity for 0 Ordinals</button>
     </div>
     <button onclick="optionsMenu(0)" class="menuB" id="optionsB">Options</button>
     <div id="options">

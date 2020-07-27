@@ -28,6 +28,12 @@ button {
 #perkMenuB {
   display: none;
 }
+#infMenu {
+  display: none;
+}
+#infMenuB {
+  display: none;
+}
 #options {
   display: none;
   text-align: center;

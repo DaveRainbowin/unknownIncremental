@@ -14,6 +14,8 @@ var pUpg1 = false;
 var cGain = 0;
 var c = 0;
 var unlockedPerks = false;
+var oGain = 0;
+var o = 0;
 var unlockedInf = false;
 var visitedBefore = false;
 // var speedTokens = 0;
@@ -26,6 +28,7 @@ function get(id) {
 }
 function update() {
   calcPrestige();
+  calcInf();
   get("mainNum").innerHTML = `${mainNum} n`;
   get("price").innerHTML = `Price: ${upgPrice} n`;
   get("price2").innerHTML = `Price: ${upg2Price} n`;
@@ -36,8 +39,9 @@ function update() {
   get("prestigeButton").innerHTML = `Prestige for ${cGain} Crystals`;
   get("pp").innerHTML = `${c} C`;
   get("ppBoost").innerHTML = `Boosting production by ^${Math.round((c ** 0.1)).toFixed(3)}`;
-  if (mainNum >= Infinity) {
-    infinityUnlock();
+  get("infinityButton").innerHTML = `Infinity for ${oGain} Ordinals`;
+  if (mainNum >= Infinity && !unlockedInf) {
+    get("infMenuB").style.display = "block";
   }
 }
 function updateSec() {
@@ -101,7 +105,7 @@ function prestige() {
 }
 function calcPrestige() {
   if (mainNum >= 10000) {
-    cGain = Math.floor((mainNum ** 0.1) * 10) / 10;
+    cGain = (mainNum ** 0.1).toFixed(1);
   } else {
     cGain = 0;
   }
@@ -112,8 +116,15 @@ function pUpg() {
     c -= 5;
   }
 }
-function unlockInfinity() {
-
+function infinity() {
+  // TBA
+}
+function calcInf() {
+  if (mainNum >= Infinity) {
+    oGain = 1;
+  } else {
+    oGain = 0;
+  }
 }
 function maxAll() {
   while (mainNum >= upg3Price) {

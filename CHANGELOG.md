@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.7] - 2020-07-27
+### Fixed
+- Not using .toFixed
+
 ## [0.1.6] - 2020-07-23
 ### Fixed
 - Changed from using * x and / x to use .toFixed(x ** 0.2)
