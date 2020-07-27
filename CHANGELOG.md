@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.9] - 2020-07-27
+### Fixed
+- Using Math.round (causes 1)
+
 ## [0.1.8] - 2020-07-27
 ### Fixed
 - Not using parseFloat() after using .toFixed() (causes strings)
