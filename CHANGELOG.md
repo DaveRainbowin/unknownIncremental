@@ -6,13 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.8] - 2020-07-27
+### Fixed
+- Not using parseFloat() after using .toFixed() (causes strings)
+- The changelog
+
 ## [0.1.7] - 2020-07-27
 ### Fixed
-- Not using .toFixed
+- Not using .toFixed()
 
 ## [0.1.6] - 2020-07-23
 ### Fixed
-- Changed from using * x and / x to use .toFixed(x ** 0.2)
+- Changed from using * x and / x to use .toFixed()
 
 ### Removed
 - 'Yes M' and 'Not M' console messages from pressing keys

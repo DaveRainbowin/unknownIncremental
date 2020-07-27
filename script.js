@@ -38,7 +38,7 @@ function update() {
   get("nps").innerHTML = `${nps} nps`;
   get("prestigeButton").innerHTML = `Prestige for ${cGain} Crystals`;
   get("pp").innerHTML = `${c} C`;
-  get("ppBoost").innerHTML = `Boosting production by ^${Math.round((c ** 0.1)).toFixed(3)}`;
+  get("ppBoost").innerHTML = `Boosting production by ^${parseFloat(Math.round((c ** 0.1)).toFixed(3))}`;
   get("infinityButton").innerHTML = `Infinity for ${oGain} Ordinals`;
   if (mainNum >= Infinity && !unlockedInf) {
     get("infMenuB").style.display = "block";
@@ -100,12 +100,12 @@ function prestige() {
   tickKeeper = setInterval(updateSec, tickSpeed);
   get("pp").style.display = "flex";
   get("ppBoost").style.display = "flex";
-  c += cGain.toFixed(1);
+  c += parseFloat(cGain.toFixed(1));
   npsUpg *= (c ** 0.1);
 }
 function calcPrestige() {
   if (mainNum >= 10000) {
-    cGain = (mainNum ** 0.1).toFixed(1);
+    cGain = parseFloat((mainNum ** 0.1).toFixed(1));
   } else {
     cGain = 0;
   }
